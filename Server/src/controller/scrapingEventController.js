@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { fintechDB, saveEvent, saveTraining } from "../model/fintechDB.js";
+import { fintechDB, saveEvent, savePosts, saveProjects, saveTraining } from "../model/fintechDB.js";
 
 export async function scrapeEvents(req, res) {
   const browser = await puppeteer.launch({
@@ -98,7 +98,6 @@ export async function scrapeEvents(req, res) {
     await browser.close();
   }
 }
-
 
 export async function scrapeTrainer(req, res) {
   const browser = await puppeteer.launch({
@@ -200,6 +199,56 @@ export async function scrapeTrainer(req, res) {
   }
 }
 
+export async function scrapeProjects(req, res){
+  const browser = await puppeteer.launch({
+    headless: false,
+    slowMo: 300,
+  })
+
+  try {
+    const page1 = await browser.newPage();
+    await page1.goto('https://idbinvest.org/es/proyectos', {
+      waitUntil: 'networkidle2',
+      timeout: 0,
+    })
+
+    const dataOne = await page1.evaluate(() => {
+      const items = []
+
+      document.querySelectorAll('tr').forEach(item => {
+        const titleElement = item.querySelector('td.priority-low a')
+        const title = titleElement ? titleElement.innerText : "";
+
+        const countryElement = item.querySelector('td.views-field-field-country a');
+        const country = countryElement ? countryElement.innerText : "Unknown";
+
+        const linkElement = item.querySelector('td.priority-low a');
+        const hrefUrl = linkElement ? linkElement.href : ""
+
+        if(title, country, hrefUrl){
+          items.push({title, country, hrefUrl})
+        }
+      });
+      return items;
+    })
+
+    console.log("Datos extraidos:", dataOne)
+    
+    await page1.close();
+
+    for (const projects of dataOne){
+      await saveProjects(projects)
+    }
+
+    await browser.close();
+    res.status(200).json({message : "Data scraped and saved successfully!"})
+  } catch (error) {
+    console.error("Error durante el scraping:", error);
+    res.status(500).json({ message: "Ocurrió un error durante el scraping" });
+  }finally{
+    await browser.close();
+  }
+}
 
 export async function scrapePosts(req, res){
   const browser = await puppeteer.launch({
@@ -209,22 +258,92 @@ export async function scrapePosts(req, res){
 
   try {
     const page1 = await browser.newPage();
-    await page1.goto('', {
+    await page1.goto('https://idbinvest.org/es/publicaciones', {
       waitUntil: 'networkidle2',
       timeout: 0,
     })
 
-    
+    const dataOne = await page1.evaluate(() => {
+      const items = []
+
+      document.querySelectorAll("ul.item-list li").forEach(item => {
+
+        const titleElement = item.querySelector("div.article__item__content p");
+        const title = titleElement ? titleElement.innerText : ""
+
+        const dateElement = item.querySelector("div.field--type-datetime");
+        const date = dateElement ? dateElement.innerText : ""
+
+        const imgElement = item.querySelector("img.pdfpreview-file");
+        const imgUrl = imgElement ? imgElement.src : ""
+
+        const hrefElement = item.querySelector("span.pdfpreview-image-wrapper a");
+        const hrefUrl = hrefElement ? hrefElement.href : "";
+
+        if(title, date, imgUrl, hrefUrl){
+          items.push({title, date, imgUrl, hrefUrl})
+        }
+      });
+      return items;
+    })
+
+    console.log("Datos extraídos", dataOne)
+
+    await page1.close();
+
+    for (const post of dataOne){
+      await savePosts(post)
+    }
+
+    await browser.close()
+    res.status(200).json({messaje: "Data scraped and saved successfully!"})
   } catch (error) {
-    
+    console.error("Error durante el scraping: ", error)
+    res.status(500).json({messaje: "Ocurrió un error durante el scraping."})
+  }finally{
+    await browser.close()
   }
 }
 
+export async function getEvents(req, res) {
+  try {
+    const [result] = await fintechDB.query("SELECT * FROM events");
+    res.json({ events: result }); // Devuelve un objeto con la clave "events"
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error getting events" });
+  }
+}
 
+export async function getTrainer(req, res){
+  try {
+    const [result] = await fintechDB.query("SELECT * FROM trainings");
+    res.json({trainings: result})
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message: "Error getting trainings"})
+  }
+}
 
+export async function getProjects(req, res){
+  try {
+    const [result] = await fintechDB.query("SELECT * FROM projects");
+    res.json({projects: result})
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message: "Error getting projects"})
+  }
+}
 
-
-
+export async function getPosts(req, res){
+  try {
+    const [result] = await fintechDB.query("SELECT * FROM posts");
+    res.json({posts: result})
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message: "Error getting posts"})
+  }
+}
 
 
 

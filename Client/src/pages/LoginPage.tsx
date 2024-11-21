@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import workingLogin from "../lib/svg/WorkingLogin.svg";
 import { useNavigate } from "react-router";
-import Dashboard from "./Dashboard";
+import DashboardMain from "./DashboardMain";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,7 +10,6 @@ export default function LoginPage() {
   const [loginSuccessful, setLoginSuccessful] = useState(false);
   const navigate = useNavigate();
 
-  // Chequeo del token en el montaje del componente
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (token) {
@@ -53,7 +52,7 @@ export default function LoginPage() {
   return (
     <>
       {loginSuccessful ? (
-        <Dashboard />
+        <DashboardMain />
       ) : (
         <div className="min-h-screen w-full bg-gradient-to-br from-pink-500 to-pink-600 p-4 lg:p-8 flex items-center justify-center">
           <div className="mx-auto max-w-5xl overflow-hidden rounded-xl bg-white shadow-xl">

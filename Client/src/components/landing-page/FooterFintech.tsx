@@ -1,7 +1,32 @@
 import React from "react";
+import { useApi } from "../../context/ApiContext";
 
 const FooterFintech: React.FC = () => {
   const [fileName, setFileName] = React.useState("No hay archivo seleccionado");
+  const [error, setError] = React.useState<string | null>(null);
+
+  const { postSubscribe, setEmail, email } = useApi();
+
+  const validateEmail = (email: string): boolean => {
+    // Expresión regular para validar correos electrónicos
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubscribe = () => {
+    if (!email) {
+      setError("Por favor, ingresa un correo electrónico.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+
+    setError(null); // Limpia el error si el email es válido
+    postSubscribe();
+  };
 
   return (
     <div className="w-full h-auto flex flex-col md:flex-row justify-center items-center px-4 md:px-0 py-8">
@@ -40,8 +65,8 @@ const FooterFintech: React.FC = () => {
         </div>
         <div>
           <p className="text-white text-base md:text-lg font-normal mt-2">
-            Suscríbete y entérate de las actualizaciones que Fintech tiene
-            para ti.
+            Suscríbete y entérate de las actualizaciones que Fintech tiene para
+            ti.
           </p>
         </div>
         <div className="flex flex-col items-center">
@@ -49,8 +74,17 @@ const FooterFintech: React.FC = () => {
             type="email"
             className="w-full max-w-xs h-10 rounded-lg shadow-lg pl-3 text-sm md:text-lg font-semibold mb-3"
             placeholder="Ingresa tu correo..."
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
-          <button className="w-1/2 md:w-2/4 h-10 md:h-12 bg-white rounded-lg text-base md:text-xl font-bold">
+          {error && <p className="text-red-100 text-sm mb-2">{error}</p>}
+          <button
+            onClick={() => {
+              handleSubscribe()
+              setEmail('')
+            }}
+            className="w-1/2 md:w-2/4 h-10 md:h-12 bg-white rounded-lg text-base md:text-xl font-bold"
+          >
             Suscríbete
           </button>
         </div>

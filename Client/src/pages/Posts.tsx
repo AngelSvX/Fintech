@@ -1,31 +1,51 @@
-import React from 'react'
-import EventTwo from "../../src/lib/images/OurEvents/EventTwo.jpg";
+import React, { useEffect } from 'react';
+import { useApi } from '../context/ApiContext';
 
 function Posts() {
-  return (
-    <div className=" w-full flex items-center flex-col">
-    <div className="w-4/5 mb-10">
-      <h2 className="text-4xl font-semibold">PUBLICACIONES</h2>
-    </div>
-    <div className=" w-4/5 flex flex-row justify-between">
-      <div className="w-2/5 flex flex-col">
-        <div className="image w-full h-full">
-          <img src={EventTwo} alt="" className="object-cover w-full" />
-        </div>
-        <div className="title font-semibold text-xl px-2 py-3">Encuentro Anual de #FinquityALC2024 “Del plan a la acción: Construyendo alianzas para una efectiva inclusión financiera de las mujeres en América Latina y el Caribe“</div>
-        <div className="description text-md px-2">Un evento de dos días organizado por FinEquityALC – CGAP en alianza con Bancamía, entidad de la Fundación Microfinanzas BBVA, CAF – Banco de desarrollo de América Latina y el Caribe, la Fundación WWB Colombia y Banca de las Oportunidades.   El evento reunirá a los/las participantes de la comunidad</div>
-      </div>
+  const { listPosts, getPosts } = useApi();
 
-      <div className="w-2/5 flex flex-col">
-        <div className="image w-full h-full">
-          <img src={EventTwo} alt="" className="object-cover w-full" />
-        </div>
-        <div className="title font-semibold text-xl px-2 py-3">Encuentro Anual de #FinquityALC2024 “Del plan a la acción: Construyendo alianzas para una efectiva inclusión financiera de las mujeres en América Latina y el Caribe“</div>
-        <div className="description px-2">Un evento de dos días organizado por FinEquityALC – CGAP en alianza con Bancamía, entidad de la Fundación Microfinanzas BBVA, CAF – Banco de desarrollo de América Latina y el Caribe, la Fundación WWB Colombia y Banca de las Oportunidades.   El evento reunirá a los/las participantes de la comunidad</div>
-      </div>
+  useEffect(() => {
+    getPosts();
+  }, [getPosts]);
+
+  return (
+    <div className="w-full flex items-center justify-center flex-wrap gap-8 px-4 py-6">
+      {listPosts.length > 0 ? (
+        listPosts.map((post, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-lg rounded-lg p-6 mb-4 w-full max-w-md hover:shadow-xl transition-shadow duration-300"
+          >
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">{post.title}</h2>
+            <p className="text-sm text-gray-500 mb-4">{post.date}</p>
+            {post.imgUrl && (
+              <img
+                src={post.imgUrl}
+                alt="Imagen de la publicación"
+                className="rounded-lg w-full h-48 object-cover mb-4"
+              />
+            )}
+            <div className="flex justify-between items-center">
+              {post.hrefUrl ? (
+                <a
+                  href={post.hrefUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 font-semibold hover:text-indigo-800 text-sm"
+                >
+                  Más detalles
+                </a>
+              ) : (
+                <p className="text-gray-400 italic text-sm">URL desconocida</p>
+              )}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500 italic text-center mt-10">No hay publicaciones disponibles</p>
+      )}
     </div>
-  </div>
-  )
+  );
 }
 
-export default Posts
+export default Posts;

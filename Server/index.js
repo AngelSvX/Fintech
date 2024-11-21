@@ -3,6 +3,8 @@ import cors from 'cors'
 import cron from "node-cron"
 import authRouter from './src/api/authRouter.js'
 import scrapeRouter from './src/api/scrapingEventRouter.js'
+import communityRouter from './src/api/communityRouter.js'
+import dashboardRouter from './src/api/dashboardRouter.js'
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
@@ -24,6 +26,8 @@ app.use(cors())
 // app.get("/events", getEvents)
 app.use("/api", scrapeRouter)
 app.use("/api", authRouter)
+app.use("/api", communityRouter)
+app.use("/api", dashboardRouter)
 
 
 // cron.schedule("* * * * *", () => {

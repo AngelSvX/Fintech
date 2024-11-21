@@ -55,15 +55,6 @@ const NavBar: React.FC = () => {
                 Nosotros
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                onClick={() => setMenuOpen(false)}
-                className="text-lg font-medium text-navLink hover:text-pink-600 transition-colors"
-              >
-                Administrador
-              </NavLink>
-            </li>
           </ul>
         </nav>
 
@@ -71,16 +62,16 @@ const NavBar: React.FC = () => {
         <div className="hidden md:flex items-center justify-center md:w-2/6 space-x-4">
           <button className="relative inline-flex items-center justify-center p-[2.9px] overflow-hidden text-black rounded-lg group bg-gradient-to-br from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] hover:text-white transition-all">
             <span className="relative px-8 py-3 transition-all ease-in duration-200 bg-white rounded-md group-hover:bg-opacity-0">
-              <span className="bg-gradient-to-br from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] inline-block text-transparent bg-clip-text group-hover:text-white font-bold text-lg">
-                Proyectos
+              <span className="bg-gradient-to-br from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] inline-block text-transparent bg-clip-text group-hover:text-white font-bold text-lg" onClick={() => navigate("/contact")}>
+                Contáctanos
               </span>
             </span>
           </button>
           <button
             className="px-8 py-[15px] bg-custom-gradient rounded-lg text-white text-lg font-bold transition-all hover:shadow-lg"
-            onClick={() => navigate("/contact")}
+            onClick={() => navigate("/login")}
           >
-            Contáctanos
+            Ingresar
           </button>
         </div>
       </div>

@@ -10,7 +10,7 @@ export async function loginAuth(req, res) {
     const [result] = await fintechDB.query(consult, [username, password]);
 
     if (result.length > 0) {
-      const token = jwt.sign({ username }, "Stack", { expiresIn: '1m' });
+      const token = jwt.sign({ username }, "Stack", { expiresIn: '5m' });
       console.log(token)
       res.send({ token });
     } else {

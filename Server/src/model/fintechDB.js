@@ -70,3 +70,57 @@ export async function saveTraining(training){
     console.error('Error al guardar la capacitación: ', error)
   }
 }
+
+export async function saveProjects(project){
+  try {
+    const {title, country, hrefUrl} = project
+    if(!title){
+      console.log("Proyecto omitido por falta de título o contenido.")
+      return;
+    }
+
+    const [existingProject] = await fintechDB.query(
+      "SELECT * FROM projects WHERE title = ?",
+      [title]
+    );
+
+    if(existingProject.length > 0){
+      console.log(`El proyecto "${title}" ya existe en la base de datos con contenido similar.`)
+      return;
+    }
+
+    const sql = "INSERT INTO projects (title, country, hrefUrl) VALUES(?, ?, ?)";
+
+    const [result] = await fintechDB.query(sql, [title, country, hrefUrl]);
+    return result;
+  } catch (error) {
+    console.error("Error al guardar el proyecto: ", project, error)
+  }
+}
+
+export async function savePosts(post){
+  try {
+    const {title, date, imgUrl, hrefUrl} = post
+
+    if(!title){
+      console.log("Proyecto omitido por falta de título")
+    }
+
+    const [existingPosts] = await fintechDB.query(
+      "SELECT * FROM posts WHERE title = ?",
+      [title]
+    );
+
+    if(existingPosts.length > 0){
+      console.log(`El post "${title}" ya existe en la base de datos con contenido similar.`)
+      return;
+    }
+
+    const sql = "INSERT INTO posts (title, date, imgUrl, hrefUrl) VALUES(?,?,?,?)";
+
+    const [result] = await fintechDB.query(sql, [title, date, imgUrl, hrefUrl])
+    return result;
+  } catch (error) {
+    console.error("Error al guardar el post: " + post + " con el error: " + error )
+  }
+}

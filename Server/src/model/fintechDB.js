@@ -2,9 +2,9 @@ import mysql from "mysql2/promise";
 
 // Elimina los valores y coloca los tuyos
 export const fintechDB = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "Angelsvx211403",
+  host: "database-cf.crimqu4mo5xd.sa-east-1.rds.amazonaws.com",
+  user: "admin",
+  password: "cualquiera1?",
   database: "fintech",
 });
 

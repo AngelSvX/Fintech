@@ -4,7 +4,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "if not exist dist mkdir dist && xcopy /s /e /y index.js dist\\ && xcopy /s /e /y src dist\\src\\ && copy package.json dist\\ && copy .env dist\\ && cd dist && npm install --production",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",

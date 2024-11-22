@@ -40,7 +40,14 @@ function App() {
           }
         />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/contact"
+          element={
+            <ApiProvider>
+              <Contact />
+            </ApiProvider>
+          }
+        />
         <Route
           path="/posts"
           element={

@@ -27,3 +27,21 @@ export async function postCommunity(req, res) {
     res.status(500).json({ error: "Error al guardar en la base de datos." });
   }
 }
+
+
+export async function postContact(req, res){
+  const { name, lastName, email, message } = req.body
+  console.log("Request recibido: ", name, lastName, email, message);
+
+  try {
+    const [result] = await fintechDB.query(
+      "INSERT INTO contacts(name, lastName, email, message) VALUES(?,?,?,?)",
+      [name, lastName, email, message]
+    )
+    console.log("Inserción exitosa: ", result)
+    res.status(201).json({message: "Mensaje enviado correctamente", result})
+  } catch (error) {
+    console.error("Error al guardar el mensaje en la base de datos, ", err)
+    res.status(500).json({error: "Error al guardar en la base de datos."})
+  }
+}

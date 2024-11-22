@@ -84,6 +84,33 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailForm, setEmailForm] = useState("");
+  const [message, setMessage] = useState("");
+
+  const clearInputsMessage = () => {
+    setName("");
+    setLastName("");
+    setEmailForm("");
+    setMessage("");
+  }
+
+  const postContact = async () => {
+    try {
+      await axios.post("http://localhost:3000/api/postMessage", {
+        name: name,
+        lastName: lastName,
+        email: emailForm,
+        message: message,
+      })
+      await clearInputsMessage()
+      console.log("Email insertado correctamente, ", email)
+    } catch (error) {
+      console.error("Error al insertar suscripción, ", error)
+    }
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -93,11 +120,20 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({
         listTrainings,
         setEmail,
         email,
+        name,
+        lastName,
+        emailForm,
+        message,
+        setName,
+        setLastName,
+        setEmailForm,
+        setMessage,
         getPosts,
         getEvents,
         getProjects,
         getTrainings,
         postSubscribe,
+        postContact,
       }}
     >
       {children}

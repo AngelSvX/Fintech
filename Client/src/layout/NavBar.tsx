@@ -10,7 +10,7 @@ const NavBar: React.FC = () => {
   return (
     <header className="h-[100px] flex justify-center items-center mb-6 px-4 md:px-0">
       <div className="w-full max-w-7xl flex items-center justify-between">
-        {/* Logo Section */}
+
         <div className="flex w-1/3 md:w-1/6 justify-start">
           <img
             className="object-cover w-[120px] md:w-auto cursor-pointer"
@@ -20,7 +20,6 @@ const NavBar: React.FC = () => {
           />
         </div>
 
-        {/* Menu Toggle Button for Mobile */}
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -30,7 +29,6 @@ const NavBar: React.FC = () => {
           </button>
         </div>
 
-        {/* Navigation Links */}
         <nav
           className={`flex-col md:flex-row ${
             menuOpen ? "flex" : "hidden"
@@ -58,7 +56,6 @@ const NavBar: React.FC = () => {
           </ul>
         </nav>
 
-        {/* Buttons Section */}
         <div className="hidden md:flex items-center justify-center md:w-2/6 space-x-4">
           <button className="relative inline-flex items-center justify-center p-[2.9px] overflow-hidden text-black rounded-lg group bg-gradient-to-br from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] hover:text-white transition-all">
             <span className="relative px-8 py-3 transition-all ease-in duration-200 bg-white rounded-md group-hover:bg-opacity-0">

@@ -7,12 +7,10 @@ const ValuePropositions: React.FC = () => {
     <div className="w-full flex items-center justify-center px-4 lg:px-0">
       <section className="w-full lg:w-4/5 my-14 flex flex-col lg:flex-row items-center lg:items-start lg:space-x-10 space-y-10 lg:space-y-0">
         
-        {/* SVG Section */}
         <section className="svg-cont w-full lg:w-7/12 flex items-center justify-center mb-6 lg:mb-0">
           <img src={Value} alt="Value Proposition" className="w-full max-w-md md:max-w-lg lg:max-w-none object-cover" />
         </section>
 
-        {/* Text Section */}
         <section className="text-cont w-full lg:w-5/12 text-center lg:text-left space-y-6 px-4 lg:px-0">
           <div className="text mb-6">
             <h3 className="text-subTitle font-bold text-lg md:text-xl lg:text-2xl pb-2">
@@ -29,7 +27,6 @@ const ValuePropositions: React.FC = () => {
             </p>
           </div>
 
-          {/* Propositions Section */}
           <div className="value grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-4 lg:gap-x-6">
             {propositions.map((proposition, index) => (
               <div key={index} className="flex flex-col sm:flex-row items-center lg:items-start text-center lg:text-left space-y-2 sm:space-y-0 sm:space-x-4">

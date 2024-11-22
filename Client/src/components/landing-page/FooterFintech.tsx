@@ -8,7 +8,6 @@ const FooterFintech: React.FC = () => {
   const { postSubscribe, setEmail, email } = useApi();
 
   const validateEmail = (email: string): boolean => {
-    // Expresión regular para validar correos electrónicos
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -24,26 +23,23 @@ const FooterFintech: React.FC = () => {
       return;
     }
 
-    setError(null); // Limpia el error si el email es válido
+    setError(null);
     postSubscribe();
   };
 
   return (
-    <div className="w-full h-auto flex flex-col md:flex-row justify-center items-center px-4 md:px-0 py-8">
-      <div className="w-full md:w-5/12 h-auto md:h-72 bg-custom-gradient rounded-xl mb-6 md:mb-0 md:mr-4 flex flex-col justify-between p-6 text-center">
-        <div>
-          <p className="text-white text-2xl md:text-3xl font-bold">
-            Sé parte del observatorio
-          </p>
-        </div>
-        <div>
-          <p className="text-white text-base md:text-lg font-normal mt-2">
-            Aquí tienes la oportunidad de incluir la iniciativa de tu
-            organización, ¡Escríbenos!
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <label className="block w-full max-w-xs cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 md:py-3 px-4 rounded-lg shadow-lg text-center transition duration-300">
+    <div className="w-full flex flex-col md:flex-row items-center justify-center py-12 bg-custom-gradient text-white">
+
+      <div className="w-full h-72 md:w-5/12 bg-white text-gray-800 p-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 mb-6 md:mb-0 md:mr-6">
+        <h2 className="text-2xl font-bold text-center mb-4 text-blue-600">
+          Sé parte del observatorio
+        </h2>
+        <p className="text-center text-sm md:text-base text-gray-700 mb-6">
+          Aquí tienes la oportunidad de incluir la iniciativa de tu organización,
+          ¡Escríbenos!
+        </p>
+        <div className="flex flex-col items-center">
+          <label className="block w-full max-w-xs cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg text-center transition duration-300">
             Seleccionar archivo
             <input
               type="file"
@@ -54,36 +50,35 @@ const FooterFintech: React.FC = () => {
               }}
             />
           </label>
-          <p className="mt-2 text-gray-200 text-sm">{fileName}</p>
+          <p className="mt-3 text-gray-600 text-sm italic">{fileName}</p>
         </div>
       </div>
-      <div className="w-full md:w-5/12 h-auto md:h-72 bg-custom-gradient rounded-xl md:ml-4 flex flex-col justify-between p-6 text-center">
-        <div>
-          <p className="text-white text-2xl md:text-3xl font-bold">
-            Únete a nuestra comunidad
-          </p>
-        </div>
-        <div>
-          <p className="text-white text-base md:text-lg font-normal mt-2">
-            Suscríbete y entérate de las actualizaciones que Fintech tiene para
-            ti.
-          </p>
-        </div>
+
+
+      <div className="w-full h-72 md:w-5/12 bg-white text-gray-800 p-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">
+        <h2 className="text-2xl font-bold text-center mb-4 text-purple-700">
+          Únete a nuestra comunidad
+        </h2>
+        <p className="text-center text-sm md:text-base text-gray-700 mb-6">
+          Suscríbete y entérate de las actualizaciones que Fintech tiene para ti.
+        </p>
         <div className="flex flex-col items-center">
           <input
             type="email"
-            className="w-full max-w-xs h-10 rounded-lg shadow-lg pl-3 text-sm md:text-lg font-semibold mb-3"
+            className="w-full max-w-xs h-12 rounded-lg shadow-md pl-3 text-sm md:text-base text-gray-700 border border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 outline-none mb-3"
             placeholder="Ingresa tu correo..."
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          {error && <p className="text-red-100 text-sm mb-2">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm italic mb-3">{error}</p>
+          )}
           <button
             onClick={() => {
-              handleSubscribe()
-              setEmail('')
+              handleSubscribe();
+              setEmail("");
             }}
-            className="w-1/2 md:w-2/4 h-10 md:h-12 bg-white rounded-lg text-base md:text-xl font-bold"
+            className="w-full max-w-xs py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300"
           >
             Suscríbete
           </button>

@@ -1,94 +1,72 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FiHome, FiUser, FiFileText, FiLogOut } from "react-icons/fi";
+import { FiFileText, FiHome, FiLogOut, FiUser } from "react-icons/fi";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
     <div
-      className={`flex flex-col h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white ${
+      className={`bg-gray-900 text-white h-screen fixed top-0 left-0 flex flex-col justify-between ${
         isOpen ? "w-64" : "w-20"
       } transition-all duration-300`}
     >
-      {/* Toggle Sidebar */}
-      <div
-        className="flex items-center justify-between p-4 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <h1 className={`text-2xl font-bold ${isOpen ? "block" : "hidden"}`}>
-          Dashboard
-        </h1>
+      <div>
         <button
-          className="text-white focus:outline-none"
-          aria-label="Toggle Sidebar"
+          className="p-4 text-xl bg-gray-800 hover:bg-gray-700 w-full"
+          onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? "➖" : "➕"}
         </button>
+        <nav className="mt-4 flex flex-col space-y-2">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `flex items-center gap-4 p-4 rounded-lg ${
+                isActive ? "bg-blue-500" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            <FiHome />
+            {isOpen && <span>Inicio</span>}
+          </NavLink>
+          <NavLink
+            to="/posts"
+            className={({ isActive }) =>
+              `flex items-center gap-4 p-4 rounded-lg ${
+                isActive ? "bg-blue-500" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            <FiFileText />
+            {isOpen && <span>Posts</span>}
+          </NavLink>
+          <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              `flex items-center gap-4 p-4 rounded-lg ${
+                isActive ? "bg-blue-500" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            <FiUser />
+            {isOpen && <span>Usuarios</span>}
+          </NavLink>
+        </nav>
       </div>
-
-      {/* Nav Items */}
-      <nav className="flex-1 mt-6 space-y-2">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-lg ${
-              isActive ? "bg-pink-600" : "hover:bg-gray-700"
-            }`
-          }
-        >
-          <FiHome className="text-xl" />
-          <span className={`${isOpen ? "block" : "hidden"}`}>Inicio</span>
-        </NavLink>
-        <NavLink
-          to="/posts"
-          className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-lg ${
-              isActive ? "bg-pink-600" : "hover:bg-gray-700"
-            }`
-          }
-        >
-          <FiFileText className="text-xl" />
-          <span className={`${isOpen ? "block" : "hidden"}`}>Publicaciones</span>
-        </NavLink>
-        <NavLink
-          to="/events"
-          className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-lg ${
-              isActive ? "bg-pink-600" : "hover:bg-gray-700"
-            }`
-          }
-        >
-          <FiFileText className="text-xl" />
-          <span className={`${isOpen ? "block" : "hidden"}`}>Eventos</span>
-        </NavLink>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-lg ${
-              isActive ? "bg-pink-600" : "hover:bg-gray-700"
-            }`
-          }
-        >
-          <FiUser className="text-xl" />
-          <span className={`${isOpen ? "block" : "hidden"}`}>Dashboard</span>
-        </NavLink>
-      </nav>
-
-      {/* Logout Section */}
-      <div
-        className="flex items-center gap-4 px-4 py-3 mt-auto bg-red-600 cursor-pointer hover:bg-red-700"
+      <button
+        className="flex items-center gap-4 p-4 rounded-lg hover:bg-red-600"
         onClick={handleLogout}
       >
-        <FiLogOut className="text-xl" />
-        <span className={`${isOpen ? "block" : "hidden"}`}>Cerrar sesión</span>
-      </div>
+        <FiLogOut />
+        {isOpen && <span>Salir</span>}
+      </button>
     </div>
   );
 };

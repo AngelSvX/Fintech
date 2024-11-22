@@ -38,7 +38,7 @@ export default function LoginPage() {
       .then((response) => response.json())
       .then((result) => {
         if (result.token) {
-          localStorage.setItem("token", result.token); // Guardar el token
+          localStorage.setItem("token", result.token);
           setLoginSuccessful(true);
         } else {
           setLoginSuccessful(false);

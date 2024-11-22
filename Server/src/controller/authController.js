@@ -6,7 +6,7 @@ export async function loginAuth(req, res) {
   const consult = 'SELECT * FROM admins WHERE username = ? AND password = ?';
 
   try {
-    // Usando await para recibir los resultados de la consulta
+
     const [result] = await fintechDB.query(consult, [username, password]);
 
     if (result.length > 0) {

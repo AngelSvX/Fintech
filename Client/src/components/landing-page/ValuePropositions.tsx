@@ -18,7 +18,7 @@ const ValuePropositions: React.FC = () => {
             </h3>
             <h1 className="text-mainTitle font-bold text-xl md:text-2xl lg:text-3xl pb-4 leading-tight">
               Construimos un mapa para incrementar el nivel de cooperación y el liderazgo de la{" "}
-              <span className="bg-gradient-to-br from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FF3A58] via-[#FF5378] to-[#EC2F8A] bg-clip-text text-transparent">
                 Mujer FinTech
               </span>
             </h1>

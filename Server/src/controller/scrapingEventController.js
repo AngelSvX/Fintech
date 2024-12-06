@@ -305,6 +305,8 @@ export async function scrapePosts(req, res){
   }
 }
 
+
+
 export async function getEvents(req, res) {
   try {
     const [result] = await fintechDB.query("SELECT * FROM events");
